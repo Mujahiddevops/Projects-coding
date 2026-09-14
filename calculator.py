@@ -64,7 +64,8 @@ gross_profit = buyer_offer - seller_price
 net_profit = gross_profit - transport_cost
 margin_percentage = (net_profit / buyer_offer) * 100 if buyer_offer > 0 else 0
 
-print("\n--- DEAL SUMMARY ---")
+print("==================== DEAL SUMMARY ====================")
+
 print(f"Buyer Offer:    KES {buyer_offer:,.2f}")
 print(f"Seller Price:   KES {seller_price:,.2f}")
 print(f"Transport/Fees: KES {transport_cost:,.2f}")
@@ -77,3 +78,4 @@ with open('/sdcard/Projects coding/deals.csv', mode='a', newline='') as file:
     writer.writerow([buyer_offer, seller_price, transport_cost, net_profit, f"{margin_percentage:.2f}%"])
 
 print("\n✓ Deal successfully saved to deals.csv!")
+
