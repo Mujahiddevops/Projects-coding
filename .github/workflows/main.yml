@@ -1,0 +1,26 @@
+name: Mobile DevOps CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python Environment
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Verify Python Scripts
+      run: |
+        python ledger.py
+
+    - name: Build Docker Container
+      run: |
+        docker build -t devops-ledger-suite .
