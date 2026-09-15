@@ -1,0 +1,11 @@
+--- Ledger Summary for Acme Media ---
+Starting Balance: KES 15,000.00
+
+Transactions:
+ - Script Writing Service: KES 5,000.00 (Charge Added)
+ - Advance Payment: KES 10,000.00 (Payment Received)
+ - Video Editing Add-on: KES 3,500.00 (Charge Added)
+
+Final Outstanding Balance: KES 13,500.00
+========================================
+
