@@ -1,95 +1,33 @@
-# ledger.py - Client Expense & Balance Tracker
+# Client Ledger and Outstanding Balance Tracker
 
-def generate_ledger_summary(client_name, initial_balance, transactions):
-    current_balance = initial_balance
-    summary_lines = [f"--- Ledger Summary for {client_name} ---"]
-    summary_lines.append(f"Starting Balance: KES {initial_balance:,.2f}\n")
-    
-    summary_lines.append("Transactions:")
-    for desc, amount in transactions:
-        current_balance += amount
-        type_str = "Payment Received" if amount < 0 else "Charge Added"
-        summary_lines.append(f" - {desc}: KES {abs(amount):,.2f} ({type_str})")
-        
-    summary_lines.append(f"\nFinal Outstanding Balance: KES {current_balance:,.2f}")
-    
-    # Generate WhatsApp-ready reminder snippet
-    whatsapp_msg = (
-        f"\n*Payment Reminder for {client_name}*\n"
-        f"Hello! Your current ledger balance is *KES {current_balance:,.2f}*.\n"
-        f"Please review your statement and let us know if you have any questions."
-    )
-    
-    return "\n".join(summary_lines), whatsapp_msg
+def format_currency(amount):
+    return f"KES {amount:,.2f}"
 
+def generate_reminder(client_name, balance):
+    return f"Hello {client_name}, kindly note you have an outstanding balance of {format_currency(balance)}."
 
-if __name__ == "__main__":
-    client = "Acme Media"
-    starting_amt = 15000.00
+def process_ledger(clients):
+    total_outstanding = 0
+    print("=== CLIENT OUTSTANDING BALANCES ===")
     
-    # Positive values = charges, Negative values = payments received
-    tx_history = [
-        ("Script Writing Service", 5000.00),
-        ("Advance Payment", -10000.00),
-        ("Video Editing Add-on", 3500.00)
-    ]
-    
-    report, reminder = generate_ledger_summary(client, starting_amt, tx_history)
-    
-    print(report)
-    print("\n" + "="*40)
-    print("WhatsApp Card Preview:")
-    print("="*40)
-    print(reminder)
-# ledger.py - Client Expense & Balance Tracker with File Export
-
-def generate_ledger_summary(client_name, initial_balance, transactions):
-    current_balance = initial_balance
-    summary_lines = [f"--- Ledger Summary for {client_name} ---"]
-    summary_lines.append(f"Starting Balance: KES {initial_balance:,.2f}\n")
-    
-    summary_lines.append("Transactions:")
-    for desc, amount in transactions:
-        current_balance += amount
-        type_str = "Payment Received" if amount < 0 else "Charge Added"
-        summary_lines.append(f" - {desc}: KES {abs(amount):,.2f} ({type_str})")
-        
-    summary_lines.append(f"\nFinal Outstanding Balance: KES {current_balance:,.2f}")
-    
-    whatsapp_msg = (
-        f"\n*Payment Reminder for {client_name}*\n"
-        f"Hello! Your current ledger balance is *KES {current_balance:,.2f}*.\n"
-        f"Please review your statement and let us know if you have any questions."
-    )
-    
-    return "\n".join(summary_lines), whatsapp_msg
-
-
-def save_to_history(report_text):
-    # Appends the generated report directly to a text file
-    with open("ledger_history.txt", "a") as file:
-        file.write(report_text + "\n" + "="*40 + "\n\n")
-
+    for client in clients:
+        balance = client["total_due"] - client["paid"]
+        if balance > 0:
+            total_outstanding += balance
+            print(f"⚠️  {client['name']}")
+            print(f"    Balance: {format_currency(balance)}")
+            print(f"    Message: \"{generate_reminder(client['name'], balance)}\"\n")
+        else:
+            print(f"✅ {client['name']} is fully paid up.\n")
+            
+    print(f"Total Portfolio Outstanding: {format_currency(total_outstanding)}")
+    return total_outstanding
 
 if __name__ == "__main__":
-    client = "Acme Media"
-    starting_amt = 15000.00
-    
-    tx_history = [
-        ("Script Writing Service", 5000.00),
-        ("Advance Payment", -10000.00),
-        ("Video Editing Add-on", 3500.00)
+    sample_clients = [
+        {"name": "A & A Cosmetics", "total_due": 150000, "paid": 100000},
+        {"name": "Nexus Logistics", "total_due": 85000, "paid": 85000},
+        {"name": "Safari Traders", "total_due": 200000, "paid": 120000},
     ]
-    
-    report, reminder = generate_ledger_summary(client, starting_amt, tx_history)
-    
-    # Print to console
-    print(report)
-    print("\n" + "="*40)
-    print("WhatsApp Card Preview:")
-    print("="*40)
-    print(reminder)
-    
-    # Save automatically to file
-    save_to_history(report)
-    print("\n✓ Ledger summary successfully saved to ledger_history.txt")
+    process_ledger(sample_clients)
+
