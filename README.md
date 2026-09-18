@@ -1,15 +1,14 @@
-# Mobile DevOps & Ledger Suite
+# Intermediary Deal Calculator & Ledger
 
-A lightweight Python-based client ledger and profit calculator automation pipeline, containerized with Docker and built directly on Android via Termux.
+A Python-based toolkit designed to calculate profit margins for intermediary deals and automatically log transaction details into a CSV ledger.
 
 ## Features
+* **Profit Calculator:** Calculates total costs, net profit, and profit margins.
+* **CSV Ledger:** Automatically logs transaction data (`deals.csv`).
+* **Automated Testing:** Uses `unittest` and `pytest` for test coverage.
+* **CI/CD Pipeline:** Integrated with GitHub Actions to test code on every commit.
 
-- **Deal Calculator (`calculator.py`)**: Computes gross/net margins and exports deals to `deals.csv`.
-- **Client Ledger (`ledger.py`)**: Tracks account balances, exports formatted history to `ledger_history.txt`, and generates copy-paste WhatsApp reminder cards.
-- **Docker Ready (`Dockerfile`)**: Standardized container configuration for deployment across cloud environments.
-
-## Quick Start (Termux)
-
-Run the client ledger script locally:
+## Usage
+Run the ledger script:
 ```bash
 python ledger.py
