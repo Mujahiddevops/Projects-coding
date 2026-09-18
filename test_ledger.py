@@ -1,2 +1,2 @@
-def test_sample():
+def test_ledger():
     assert True
