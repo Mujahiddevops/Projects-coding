@@ -78,4 +78,19 @@ with open('/sdcard/Projects coding/deals.csv', mode='a', newline='') as file:
     writer.writerow([buyer_offer, seller_price, transport_cost, net_profit, f"{margin_percentage:.2f}%"])
 
 print("\n✓ Deal successfully saved to deals.csv!")
+def calculate_deal(buyer_offer, seller_price, transport_cost):
+    gross_profit = buyer_offer - seller_price
+    net_profit = gross_profit - transport_cost
+    margin_percentage = (net_profit / buyer_offer) * 100 if buyer_offer > 0 else 0
+    return net_profit, margin_percentage
+def calculate_deal(buyer_offer, seller_price, transport_cost):
+    gross_profit = buyer_offer - seller_price
+    net_profit = gross_profit - transport_cost
+    margin_percentage = (net_profit / buyer_offer) * 100 if buyer_offer > 0 else 0
+    return net_profit, margin_percentage
+def calculate_deal(buyer_offer, seller_price, transport_cost):
+    gross_profit = buyer_offer - seller_price
+    net_profit = gross_profit - transport_cost
+    margin_percentage = (net_profit / buyer_offer) * 100 if buyer_offer > 0 else 0
+    return net_profit, margin_percentage
 

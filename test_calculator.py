@@ -1,17 +1,13 @@
-# Unit tests for calculator functions
+import unittest
+from calculator import calculate_deal
 
-def calculate_margin(buyer_offer, seller_price, transport_cost):
-    gross_profit = buyer_offer - seller_price
-    net_profit = gross_profit - transport_cost
-    margin_percentage = (net_profit / buyer_offer) * 100
-    return net_profit, margin_percentage
+class TestCalculator(unittest.TestCase):
+    def test_margin_calculation(self):
+        net_profit, margin = calculate_deal(100, 70, 10)
+        self.assertEqual(net_profit, 20)
+        self.assertEqual(margin, 20.0)
 
-def test_profit_calculation():
-    net_profit, margin = calculate_margin(150000, 120000, 5000)
-    assert net_profit == 25000
-    assert round(margin, 2) == 16.67
+if __name__ == '__main__':
+    unittest.main()
 
-def test_break_even():
-    net_profit, margin = calculate_margin(100000, 90000, 10000)
-    assert net_profit == 0
-    assert margin == 0.0
+
